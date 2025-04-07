@@ -6,6 +6,7 @@ bases:
 - ../../base
 
 resources:
+- ./configmap.yaml
 - ./route.yaml
 #namespace: mpizarro-dev
 
