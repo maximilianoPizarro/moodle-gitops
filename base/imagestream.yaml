@@ -9,6 +9,13 @@ metadata:
 spec:
   lookupPolicy:
     local: false
+  tags:
+    - name: latest
+      from:
+        kind: DockerImage
+        name: quay.io/maximilianopizarro/moodle:latest
+      importPolicy:
+        scheduled: true
 ---
 kind: ImageStream
 apiVersion: image.openshift.io/v1
