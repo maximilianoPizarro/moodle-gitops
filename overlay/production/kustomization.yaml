@@ -4,7 +4,6 @@ kind: Kustomization
 resources:
   - ./route.yaml
   - ../../base
-  - ./application.yaml
 
 patches:
   - path: ./deployment-patches.yaml
