@@ -3,6 +3,7 @@ kind: Kustomization
 #namespace: mpizarro-dev
 resources:
 - ./route.yaml
+- ./applicationset.yaml
 - ../../base
 patches:
 - path: ./deployment-patches.yaml
