@@ -20,7 +20,7 @@ spec:
     - name: VERSION
       value: moodle-dev/php-74
     - name: EXTERNAL_URL
-      value: moodle-moodle-dev.apps.cluster-wzz86.wzz86.sandbox519.opentlc.com
+      value: moodle-moodle-dev.apps.cluster-s4vn7.s4vn7.sandbox519.opentlc.com
   pipelineRef:
     name: moodle
   taskRunTemplate:
