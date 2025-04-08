@@ -18,9 +18,9 @@ spec:
         image: quay.io/maximilianopizarro/moodle:latest
         env:
           - name: NAMESPACE
-            value: 'moodle-prod'
+            value: 'maximilianopizar-2-dev'
           - name: EXTERNAL_URL
-            value: 'https://moodle-moodle-prod.apps.cluster-cf2j7.cf2j7.sandbox519.opentlc.com'
+            value: 'https://moodle-maximilianopizar-2-dev.apps.rm2.thpm.p1.openshiftapps.com'
         volumeMounts:
           - name: moodle-data
             mountPath: /opt/app-root/moodledata

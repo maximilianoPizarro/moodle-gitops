@@ -1,0 +1,33 @@
+apiVersion: tekton.dev/v1
+kind: PipelineRun
+metadata:
+  name: moodle-pipelinerun
+  labels:
+    app: moodle
+    tekton.dev/pipeline: moodle
+spec:
+  params:
+    - name: APP_NAME
+      value: moodle
+    - name: GIT_REPO
+      value: 'https://github.com/moodle/moodle'
+    - name: GIT_REVISION
+      value: MOODLE_311_STABLE
+    - name: IMAGE_NAME
+      value: 'image-registry.openshift-image-registry.svc:5000/maximilianopizar-2-dev/moodle'
+    - name: PATH_CONTEXT
+      value: .
+    - name: VERSION
+      value: maximilianopizar-2-dev/php-74
+    - name: EXTERNAL_URL
+      value: moodle-maximilianopizar-2-dev.apps.rm2.thpm.p1.openshiftapps.com
+  pipelineRef:
+    name: moodle
+  taskRunTemplate:
+    serviceAccountName: pipeline
+  timeouts:
+    pipeline: 1h0m0s
+  workspaces:
+    - name: workspace
+      persistentVolumeClaim:
+        claimName: moodle-workspace
