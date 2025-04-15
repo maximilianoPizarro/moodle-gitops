@@ -1,36 +1,3 @@
-apiVersion: cluster.open-cluster-management.io/v1beta1
-kind: Placement
-metadata:
-  name: moodle-dev-placement
-  namespace: openshift-gitops
-spec:
-  clusterSets:
-    - global
-  predicates:
-    - requiredClusterSelector:
-        labelSelector:
-          matchExpressions:
-            - key: purpose
-              operator: In
-              values:
-                - development
----
-apiVersion: cluster.open-cluster-management.io/v1beta1
-kind: Placement
-metadata:
-  name: moodle-prod-placement
-  namespace: openshift-gitops
-spec:
-  clusterSets:
-    - global
-  predicates:
-    - requiredClusterSelector:
-        labelSelector:
-          matchExpressions:
-            - key: purpose
-              operator: In
-              values:
-                - production
 ---
 apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
@@ -39,32 +6,22 @@ metadata:
   namespace: openshift-gitops
 spec:
   generators:
-    - matrix:
-        generators:
-          - list:
-              elements:
-                - env: develop
-                  path: overlay/develop
-                  namespace: moodle-dev
-                  placementName: moodle-dev-placement
-                - env: production
-                  path: overlay/production
-                  namespace: moodle-prod
-                  placementName: moodle-prod-placement
-          - clusterDecisionResource:
-              configMapRef: acm-placement
-              labelSelector:
-                matchLabels:
-                  cluster.open-cluster-management.io/placement: "{{placementName}}"
-              requeueAfterSeconds: 30
+    - list:
+        elements:
+          - env: develop
+            path: overlay/develop
+            namespace: moodle-dev
+          - env: production
+            path: overlay/production
+            namespace: moodle-prod
   template:
     metadata:
-      name: moodle-{{env}}-{{name}}
+      name: moodle-{{env}}
       labels:
         velero.io/exclude-from-backup: "true"
     spec:
       destination:
-        server: "{{server}}"
+        server: https://kubernetes.default.svc
         namespace: "{{namespace}}"
       project: default
       source:

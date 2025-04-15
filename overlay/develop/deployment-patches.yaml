@@ -20,7 +20,7 @@ spec:
           - name: NAMESPACE
             value: 'moodle-dev'
           - name: EXTERNAL_URL
-            value: 'https://moodle-moodle-dev.apps.cluster-fdwtg-1.fdwtg-1.sandbox384.opentlc.com'
+            value: 'https://moodle-moodle-dev.apps.cluster-pqp2q.pqp2q.sandbox1259.opentlc.com'
         volumeMounts:
           - name: moodle-data
             mountPath: /opt/app-root/moodledata

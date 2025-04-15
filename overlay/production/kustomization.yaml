@@ -3,6 +3,7 @@ kind: Kustomization
 
 resources:
   - ./route.yaml
+  - ./rolebinding.yaml
   - ../../base
 
 patches:
