@@ -4,6 +4,8 @@ metadata:
   name: "moodle"
   description: "Moodle for Red Hat Developer Hub"
   annotations:
+  annotations:
+    quay.io/repository-slug: maximilianopizarro/moodle
     github.com/project-slug: maximilianopizarro/moodle-gitops
     backstage.io/techdocs-ref: dir:.
     backstage.io/kubernetes-namespace: moodle-dev
