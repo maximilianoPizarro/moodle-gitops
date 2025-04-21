@@ -27,4 +27,4 @@ metadata:
 spec:
   type: webside
   lifecycle: experimental
-  owner: "group:default/mapizarr"
+  owner: "user:default/mapizarr"
