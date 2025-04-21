@@ -6,7 +6,7 @@ metadata:
   annotations:
     github.com/project-slug: maximilianopizarro/moodle
     backstage.io/techdocs-ref: dir:.
-    backstage.io/kubernetes-namespace: maximilianopizar-2-dev
+    backstage.io/kubernetes-namespace: moodle-dev
     backstage.io/kubernetes-id: moodle
     janus-idp.io/tekton : moodle
     backstage.io/kubernetes-label-selector: 'app=moodle'
@@ -27,4 +27,4 @@ metadata:
 spec:
   type: webside
   lifecycle: experimental
-  owner: "group:default/maximilianopizarro"
+  owner: "group:default/mapizarr"
