@@ -1,7 +1,7 @@
 apiVersion: cluster.open-cluster-management.io/v1beta1
 kind: Placement
 metadata:
-  name: moodle-dev-placement
+  name: librechat-dev-placement
   namespace: openshift-gitops
 spec:
   clusterSets:
@@ -15,27 +15,10 @@ spec:
               values:
                 - development
 ---
-apiVersion: cluster.open-cluster-management.io/v1beta1
-kind: Placement
-metadata:
-  name: moodle-prod-placement
-  namespace: openshift-gitops
-spec:
-  clusterSets:
-    - global
-  predicates:
-    - requiredClusterSelector:
-        labelSelector:
-          matchExpressions:
-            - key: purpose
-              operator: In
-              values:
-                - production
----
 apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
-  name: moodle
+  name: librechat
   namespace: openshift-gitops
 spec:
   generators:
@@ -43,14 +26,10 @@ spec:
         generators:
           - list:
               elements:
-                - env: develop
-                  path: overlay/develop
-                  namespace: moodle-dev
-                  placementName: moodle-dev-placement
-                - env: production
-                  path: overlay/production
-                  namespace: moodle-prod
-                  placementName: moodle-prod-placement
+                - appName: librechat t
+                  namespace: librechat
+                  path: librechat
+                  placementName: librechat-dev-placement 
           - clusterDecisionResource:
               configMapRef: acm-placement
               labelSelector:
@@ -59,26 +38,29 @@ spec:
               requeueAfterSeconds: 30
   template:
     metadata:
-      name: moodle-{{env}}-{{name}}
+      name: "{{appName}}-{{name}}"
       labels:
         velero.io/exclude-from-backup: "true"
         app.kubernetes.io/part-of: application-lifecycle
         app.kubernetes.io/managed-by: argocd
         apps.open-cluster-management.io/cluster-set: global
-        cluster.open-cluster-management.io/placement: "{{placementName}}"        
+        cluster.open-cluster-management.io/placement: "{{placementName}}"
     spec:
+      project: default
+      source:
+        repoURL: https://github.com/maximilianoPizarro/ia-developement-gitops.git
+        targetRevision: main
+        path: "{{path}}"
+        helm:
+          valueFiles:
+            - helm-values.yaml
       destination:
         server: "{{server}}"
         namespace: "{{namespace}}"
-      project: default
-      source:
-        repoURL: https://github.com/maximilianoPizarro/moodle-gitops
-        targetRevision: main
-        path: "{{path}}"
       syncPolicy:
         automated:
-          prune: true
           selfHeal: true
+          prune: true
         syncOptions:
           - CreateNamespace=true
           - PruneLast=true
